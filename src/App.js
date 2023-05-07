@@ -1,9 +1,15 @@
-import classes from './App.module.css'
+import classes from "./App.module.css";
+import Navbar from "./Components/Navbar/Navbar";
+import MENU_ITEMS from "./Data/data";
+import CallToAction from "./Components/CallToAction/CallToAction";
 
 function App() {
   return (
     <div>
-      <h1>Hello</h1>
+        <Navbar />
+      <div className={classes.container_centre}>
+        <CallToAction/>
+      </div>
     </div>
   );
 }

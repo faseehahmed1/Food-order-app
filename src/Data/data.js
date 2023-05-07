@@ -30,3 +30,5 @@ const MENU_ITEMS = [
       cost: 10.99,
     },
   ];
+
+  export default MENU_ITEMS;
