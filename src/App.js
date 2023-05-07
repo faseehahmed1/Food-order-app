@@ -21,8 +21,3 @@ function App() {
 }
 
 export default App;
-
-// id: number;
-// dish: string;
-// description: string;
-// cost: number;
