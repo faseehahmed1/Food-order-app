@@ -1,0 +1,56 @@
+.container {
+  background-color: white;
+  padding: 20px 0px;
+  width: 100%;
+  border-bottom: 0.1px solid black;
+  display: flex;
+  justify-content: space-between;
+}
+
+.containerLHS {
+  margin-right: 12px;
+}
+
+.containerLHS h3,
+p {
+  margin: 0px;
+  margin-bottom: 7px;
+}
+
+.containerLHS p:nth-child(2) {
+  font-style: italic;
+}
+
+.containerLHS p:nth-child(3) {
+  color: #cc4818;
+  font-weight: bold;
+}
+
+.containerRHS input {
+  width: 30px;
+}
+
+.containerRHS button {
+  margin-top: 10px;
+  width: 100%;
+  font-weight: bold;
+  background-color: #6a2520;
+  color: white;
+  padding: 6px;
+  border-radius: 30px;
+  border: none;
+  cursor: pointer;
+}
+
+.containerRHS_amount p {
+    margin: 0px;
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.containerRHS_amount{
+    margin: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
