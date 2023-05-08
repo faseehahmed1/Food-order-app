@@ -2,44 +2,18 @@ import { useContext } from "react";
 import classes from "./Modal.module.css";
 import ReactDom from "react-dom";
 import BasketContext from "../../Context/basket-context";
+import { handlePlus, handleMinus } from "../../Handler/basket-handler";
 
 const Backdrop = (props) => {
   return <div className={classes.backdrop} onClick={props.onClick}></div>;
 };
 
 const Overlay = ({ onClick }) => {
-  const ctx = useContext(BasketContext)
-  // const handlePlus = (index) => {
-  //   setBasketItems((prevBasket) => {
-  //     const newBasket = [...prevBasket];
-  //     newBasket[index].quantity += 1;
-  //     return newBasket;
-  //   });
-  // };
-  const totalCost = ctx.basketItems.reduce((total, item) => total + +item.cost*item.quantity, 0).toFixed(2)
+  const ctx = useContext(BasketContext);
+  const totalCost = ctx.basketItems
+    .reduce((total, item) => total + +item.cost * item.quantity, 0)
+    .toFixed(2);
 
-  const handlePlus = (index) => {
-    ctx.setBasketItems((prevBasket) => {
-      const newBasket = [...prevBasket];
-      const updatedItem = {...newBasket[index], quantity: newBasket[index].quantity + 1};
-      newBasket[index] = updatedItem;
-      return newBasket;
-    });
-  };
-
-  const handleMinus = (index) => {
-    ctx.setBasketItems((prevBasket) => {
-      const newBasket = [...prevBasket];
-      if (newBasket[index].quantity > 1) {
-        const updatedItem = {...newBasket[index], quantity: newBasket[index].quantity - 1};
-      newBasket[index] = updatedItem;
-      } else {
-        const newBasketItems = [ ...ctx.basketItems.slice(0, index), ...ctx.basketItems.slice(index + 1)];
-        return newBasketItems;
-      }
-      return newBasket;
-    });
-  };
   return (
     <div className={classes.modal}>
       {ctx.basketItems.map((item, index) => {
@@ -53,30 +27,48 @@ const Overlay = ({ onClick }) => {
               </div>
             </div>
             <div className={classes.button_cont}>
-              <button className={classes.button} onClick={() => handlePlus(index)}>+</button>
-              <button className={classes.button} onClick={() => handleMinus(index)}>-</button>
+              <button
+                className={classes.button}
+                onClick={() =>
+                  handlePlus(index, ctx.basketItems, ctx.setBasketItems)
+                }
+              >
+                +
+              </button>
+              <button
+                className={classes.button}
+                onClick={() =>
+                  handleMinus(index, ctx.basketItems, ctx.setBasketItems)
+                }
+              >
+                -
+              </button>
             </div>
           </div>
         );
       })}
       <div className={classes.total}>
         <div>
-            <h2>Total Amount</h2>
+          <h2>Total Amount</h2>
         </div>
         <div>
-            <h2>${totalCost}</h2>
+          <h2>${totalCost}</h2>
         </div>
       </div>
       <div>
         <footer className={classes.actions}>
-          <button className={classes.buttonBtm} onClick={onClick}>Cancel</button>
-          <button className={classes.buttonBtm} onClick={onClick}>Order</button>
+          <button className={classes.buttonBtm} onClick={onClick}>
+            Cancel
+          </button>
+          <button className={classes.buttonBtm} onClick={onClick}>
+            Order
+          </button>
         </footer>
       </div>
     </div>
   );
 };
-const Modal = ({ setModal}) => {
+const Modal = ({ setModal }) => {
   return (
     <div>
       {ReactDom.createPortal(
