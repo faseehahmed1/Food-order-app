@@ -1,11 +1,14 @@
+import { useContext } from "react";
 import classes from "./Modal.module.css";
 import ReactDom from "react-dom";
+import BasketContext from "../../Context/basket-context";
 
 const Backdrop = (props) => {
   return <div className={classes.backdrop} onClick={props.onClick}></div>;
 };
 
-const Overlay = ({ basketItems, setBasketItems, onClick }) => {
+const Overlay = ({ onClick }) => {
+  const ctx = useContext(BasketContext)
   // const handlePlus = (index) => {
   //   setBasketItems((prevBasket) => {
   //     const newBasket = [...prevBasket];
@@ -13,10 +16,10 @@ const Overlay = ({ basketItems, setBasketItems, onClick }) => {
   //     return newBasket;
   //   });
   // };
-  const totalCost = basketItems.reduce((total, item) => total + +item.cost*item.quantity, 0).toFixed(2)
+  const totalCost = ctx.basketItems.reduce((total, item) => total + +item.cost*item.quantity, 0).toFixed(2)
 
   const handlePlus = (index) => {
-    setBasketItems((prevBasket) => {
+    ctx.setBasketItems((prevBasket) => {
       const newBasket = [...prevBasket];
       const updatedItem = {...newBasket[index], quantity: newBasket[index].quantity + 1};
       newBasket[index] = updatedItem;
@@ -25,21 +28,21 @@ const Overlay = ({ basketItems, setBasketItems, onClick }) => {
   };
 
   const handleMinus = (index) => {
-    setBasketItems((prevBasket) => {
+    ctx.setBasketItems((prevBasket) => {
       const newBasket = [...prevBasket];
       if (newBasket[index].quantity > 1) {
         const updatedItem = {...newBasket[index], quantity: newBasket[index].quantity - 1};
       newBasket[index] = updatedItem;
       } else {
-        const newBasketItems = [ ...basketItems.slice(0, index), ...basketItems.slice(index + 1)];
-        setBasketItems(newBasketItems);
+        const newBasketItems = [ ...ctx.basketItems.slice(0, index), ...ctx.basketItems.slice(index + 1)];
+        return newBasketItems;
       }
       return newBasket;
     });
   };
   return (
     <div className={classes.modal}>
-      {basketItems.map((item, index) => {
+      {ctx.basketItems.map((item, index) => {
         return (
           <div className={classes.items_cont}>
             <div>
@@ -73,7 +76,7 @@ const Overlay = ({ basketItems, setBasketItems, onClick }) => {
     </div>
   );
 };
-const Modal = ({ setModal, basketItems, setBasketItems}) => {
+const Modal = ({ setModal}) => {
   return (
     <div>
       {ReactDom.createPortal(
@@ -86,8 +89,6 @@ const Modal = ({ setModal, basketItems, setBasketItems}) => {
       )}
       {ReactDom.createPortal(
         <Overlay
-        setBasketItems={setBasketItems}
-        basketItems={basketItems}
           onClick={() => {
             setModal(false);
           }}

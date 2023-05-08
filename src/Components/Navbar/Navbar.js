@@ -1,36 +1,17 @@
 import classes from "./Navbar.module.css";
 import shoppingCartImage from "../../Images/shopping-cart.png";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import Modal from "../Modal/Modal";
+import BasketContext from "../../Context/basket-context";
 
-const MENU_ITEMS = [
-  {
-    id: 1,
-    dish: 'Spaghetti Carbonara',
-    cost: 12.99,
-    amount: 2
-  },
-  {
-    id: 2,
-    dish: 'Pad Thai',
-    cost: 9.99,
-    amount: 3
-  },
-  {
-    id: 3,
-    dish: 'Chicken Tikka Masala',
-    cost: 14.99,
-    amount: 1
-  },
-];
-
-const Navbar = ({basketItems, setBasketItems}) => {
+const Navbar = () => {
   const [modal, setModal] = useState(false)
-  const totalQuantity = basketItems.reduce((total, item) => total + +item.quantity, 0)
-  
+  const ctx = useContext(BasketContext)
+  const totalQuantity = ctx.basketItems.reduce((total, item) => total + +item.quantity, 0)
+
   return (
     <>
-    {modal && <Modal basketItems={basketItems} setBasketItems={setBasketItems} items={MENU_ITEMS} setModal={setModal}/>}
+    {modal && <Modal setModal={setModal}/>}
     <div className={classes.container}>
       <div>
         <h1>React Meals</h1>

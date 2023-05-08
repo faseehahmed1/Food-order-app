@@ -3,18 +3,20 @@ import Navbar from "./Components/Navbar/Navbar";
 import MENU_ITEMS from "./Data/data";
 import CallToAction from "./Components/CallToAction/CallToAction";
 import Menu from "./Components/Menu/Menu";
-import { useState } from "react";
+import { useContext } from "react";
+import BasketContext from "./Context/basket-context";
 
 function App() {
-  const [basketItems, setBasketItems] = useState([])
+  const ctx = useContext(BasketContext);
+
   return (
     <div>
-      <Navbar basketItems={basketItems} setBasketItems={setBasketItems}/>
+      <Navbar/>
       <div className={classes.container_centre}>
         <CallToAction />
         <div className={classes.container_menu}>
           {MENU_ITEMS.map((item) => {
-            return <Menu basketItems={basketItems} setBasketItems={setBasketItems} item={item} key={item.id}></Menu>;
+            return <Menu basketItems={ctx.basketItems} setBasketItems={ctx.setBasketItems} item={item} key={item.id}></Menu>;
           })}
         </div>
       </div>
