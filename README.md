@@ -17,7 +17,7 @@ I built an app that allows users to be add itmes to a cart.
 
 ## ✨ Deployed Site ✨
 
-https://react-basics-101-app.netlify.app/
+https://react-food-app1.netlify.app/
 
 ## App Demo
 
