@@ -24,12 +24,13 @@ const MENU_ITEMS = [
   },
 ];
 
-const Navbar = () => {
+const Navbar = ({basketItems, setBasketItems}) => {
   const [modal, setModal] = useState(false)
-
+  const totalQuantity = basketItems.reduce((total, item) => total + +item.quantity, 0)
+  
   return (
     <>
-    {modal && <Modal items={MENU_ITEMS} setModal={setModal}/>}
+    {modal && <Modal basketItems={basketItems} setBasketItems={setBasketItems} items={MENU_ITEMS} setModal={setModal}/>}
     <div className={classes.container}>
       <div>
         <h1>React Meals</h1>
@@ -44,7 +45,7 @@ const Navbar = () => {
           ></img>
         </div>
         Your cart&nbsp;&nbsp;
-        <div className={classes.basket_count}>1</div>
+        <div className={classes.basket_count}>{totalQuantity}</div>
       </button>
     </div>
       </>

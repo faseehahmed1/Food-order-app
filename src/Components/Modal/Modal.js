@@ -5,22 +5,53 @@ const Backdrop = (props) => {
   return <div className={classes.backdrop} onClick={props.onClick}></div>;
 };
 
-const Overlay = ({ items, onClick }) => {
+const Overlay = ({ basketItems, setBasketItems, onClick }) => {
+  // const handlePlus = (index) => {
+  //   setBasketItems((prevBasket) => {
+  //     const newBasket = [...prevBasket];
+  //     newBasket[index].quantity += 1;
+  //     return newBasket;
+  //   });
+  // };
+  const totalCost = basketItems.reduce((total, item) => total + +item.cost*item.quantity, 0).toFixed(2)
+
+  const handlePlus = (index) => {
+    setBasketItems((prevBasket) => {
+      const newBasket = [...prevBasket];
+      const updatedItem = {...newBasket[index], quantity: newBasket[index].quantity + 1};
+      newBasket[index] = updatedItem;
+      return newBasket;
+    });
+  };
+
+  const handleMinus = (index) => {
+    setBasketItems((prevBasket) => {
+      const newBasket = [...prevBasket];
+      if (newBasket[index].quantity > 1) {
+        const updatedItem = {...newBasket[index], quantity: newBasket[index].quantity - 1};
+      newBasket[index] = updatedItem;
+      } else {
+        const newBasketItems = [ ...basketItems.slice(0, index), ...basketItems.slice(index + 1)];
+        setBasketItems(newBasketItems);
+      }
+      return newBasket;
+    });
+  };
   return (
     <div className={classes.modal}>
-      {items.map((item) => {
+      {basketItems.map((item, index) => {
         return (
           <div className={classes.items_cont}>
             <div>
               <h3 className={classes.dish}>{item.dish}</h3>
               <div className={classes.items_amountCost}>
                 <p className={classes.cost}>$ {item.cost}</p>
-                <p className={classes.amount}>x {item.amount}</p>
+                <p className={classes.amount}>x {item.quantity}</p>
               </div>
             </div>
             <div className={classes.button_cont}>
-              <button className={classes.button}>+</button>
-              <button className={classes.button}>-</button>
+              <button className={classes.button} onClick={() => handlePlus(index)}>+</button>
+              <button className={classes.button} onClick={() => handleMinus(index)}>-</button>
             </div>
           </div>
         );
@@ -30,7 +61,7 @@ const Overlay = ({ items, onClick }) => {
             <h2>Total Amount</h2>
         </div>
         <div>
-            <h2>$123</h2>
+            <h2>${totalCost}</h2>
         </div>
       </div>
       <div>
@@ -42,7 +73,7 @@ const Overlay = ({ items, onClick }) => {
     </div>
   );
 };
-const Modal = ({ items, setModal }) => {
+const Modal = ({ setModal, basketItems, setBasketItems}) => {
   return (
     <div>
       {ReactDom.createPortal(
@@ -55,7 +86,8 @@ const Modal = ({ items, setModal }) => {
       )}
       {ReactDom.createPortal(
         <Overlay
-          items={items}
+        setBasketItems={setBasketItems}
+        basketItems={basketItems}
           onClick={() => {
             setModal(false);
           }}
