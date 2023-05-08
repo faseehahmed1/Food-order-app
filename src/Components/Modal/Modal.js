@@ -57,10 +57,10 @@ const Overlay = ({ onClick }) => {
       </div>
       <div>
         <footer className={classes.actions}>
-          <button className={classes.buttonBtm} onClick={onClick}>
+          <button className={`${classes.buttonBtm} ${classes.margin}`} onClick={onClick}>
             Cancel
           </button>
-          <button className={classes.buttonBtm} onClick={onClick}>
+          <button className={classes.buttonBtm}>
             Order
           </button>
         </footer>

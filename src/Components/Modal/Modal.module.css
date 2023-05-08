@@ -90,3 +90,7 @@
     display: flex;
     justify-content: space-between;
 }
+
+.margin{
+  margin-right: 5px;
+}

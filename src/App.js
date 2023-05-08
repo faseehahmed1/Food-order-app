@@ -8,6 +8,9 @@ import BasketContext from "./Context/basket-context";
 
 function App() {
   const ctx = useContext(BasketContext);
+  const menuItems = (MENU_ITEMS.map((item) => {
+    return <Menu basketItems={ctx.basketItems} setBasketItems={ctx.setBasketItems} item={item} key={item.id}></Menu>;
+  }))
 
   return (
     <div>
@@ -15,9 +18,7 @@ function App() {
       <div className={classes.container_centre}>
         <CallToAction />
         <div className={classes.container_menu}>
-          {MENU_ITEMS.map((item) => {
-            return <Menu basketItems={ctx.basketItems} setBasketItems={ctx.setBasketItems} item={item} key={item.id}></Menu>;
-          })}
+          {menuItems}
         </div>
       </div>
     </div>
