@@ -2,7 +2,7 @@
 
 ## Overview
 
-I built an app that allows users to be add itmes to a cart.
+I built an app that allows users to add items from the menu to a shopping cart, the cart displays the quantity and total cost of all items. This project implements the basic concepts of React:
 
 - Using React hook useState and useContext
 - Reusing components
