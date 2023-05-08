@@ -3,7 +3,7 @@ const handlePlus = (index, basketItems, setBasketItems) => {
     const newBasket = [...prevBasket];
     const updatedItem = {
       ...newBasket[index],
-      quantity: newBasket[index].quantity + 1,
+      quantity: Number(newBasket[index].quantity) + 1,
     };
     newBasket[index] = updatedItem;
     return newBasket;
