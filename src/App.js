@@ -1,6 +1,5 @@
 import classes from "./App.module.css";
 import Navbar from "./Components/Navbar/Navbar";
-import MENU_ITEMS from "./Data/data";
 import CallToAction from "./Components/CallToAction/CallToAction";
 import Menu from "./Components/Menu/Menu";
 import { useContext } from "react";
@@ -8,18 +7,25 @@ import BasketContext from "./Context/basket-context";
 
 function App() {
   const ctx = useContext(BasketContext);
-  const menuItems = (MENU_ITEMS.map((item) => {
-    return <Menu basketItems={ctx.basketItems} setBasketItems={ctx.setBasketItems} item={item} key={item.id}></Menu>;
-  }))
+  //  fetch the data and then map through it
+
+  const menuItems = ctx.basketItems.map((item) => {
+    return (
+      <Menu
+        basketItems={ctx.basketItems}
+        setBasketItems={ctx.setBasketItems}
+        item={item}
+        key={item.id}
+      ></Menu>
+    );
+  });
 
   return (
     <div>
-      <Navbar/>
+      <Navbar />
       <div className={classes.container_centre}>
         <CallToAction />
-        <div className={classes.container_menu}>
-          {menuItems}
-        </div>
+        <div className={classes.container_menu}>{menuItems}</div>
       </div>
     </div>
   );
